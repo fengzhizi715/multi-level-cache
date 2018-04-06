@@ -14,16 +14,13 @@ public interface ICache {
      * @param key
      * @return
      */
-    String get(String key);
-    
+    Object get(String key);
+
     /**
      * 获取所有缓存对象信息
-     *
      * @return
-     * @author Ace
-     * @date 2017年5月12日
      */
-    List<CacheEntity> listAll();
+    List<Object> getAll();
 
     /**
      * 保存缓存
