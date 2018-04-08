@@ -14,8 +14,6 @@ import java.util.Properties;
 @Slf4j
 public class PropertiesUtils {
 
-    public static final String DEFAULT_CONFIG = "config.properties";
-
     /**
      * load prop file
      *

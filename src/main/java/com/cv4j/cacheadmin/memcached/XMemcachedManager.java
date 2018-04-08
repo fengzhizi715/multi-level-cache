@@ -1,5 +1,6 @@
 package com.cv4j.cacheadmin.memcached;
 
+import com.cv4j.cacheadmin.config.Constant;
 import com.cv4j.cacheadmin.utils.PropertiesUtils;
 import lombok.extern.slf4j.Slf4j;
 import net.rubyeye.xmemcached.GetsResponse;
@@ -16,8 +17,6 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 import java.util.concurrent.locks.ReentrantLock;
 
-import static com.cv4j.cacheadmin.utils.PropertiesUtils.DEFAULT_CONFIG;
-
 /**
  * Created by tony on 2018/4/8.
  */
@@ -25,7 +24,6 @@ import static com.cv4j.cacheadmin.utils.PropertiesUtils.DEFAULT_CONFIG;
 public class XMemcachedManager {
 
     // MemcachedClient
-    private static final int DEFAULT_EXPIRE_TIME = 7200;	// 2H
     private static MemcachedClient memcachedClient;
     private static ReentrantLock INSTANCE_INIT_LOCK = new ReentrantLock(true);
 
@@ -37,7 +35,7 @@ public class XMemcachedManager {
                 if (INSTANCE_INIT_LOCK.tryLock(2, TimeUnit.SECONDS)) {
                     try {
                         // 构建分布式权重client
-                        Properties prop = PropertiesUtils.loadProperties(DEFAULT_CONFIG);
+                        Properties prop = PropertiesUtils.loadProperties(Constant.DEFAULT_CONFIG);
                         // client地址
                         String serverAddress = PropertiesUtils.getString(prop, "xmemcached.address");
                         serverAddress = serverAddress.replaceAll(",", " ");
@@ -80,7 +78,7 @@ public class XMemcachedManager {
      */
     public static void set(String key, Object value) {
 
-        set(key,value,DEFAULT_EXPIRE_TIME);
+        set(key,value, Constant.DEFAULT_EXPIRE_TIME);
     }
 
     /**
