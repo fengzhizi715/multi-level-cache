@@ -1,7 +1,5 @@
 package cn.netdiscovery.cacheadmin.cache;
 
-import com.cv4j.cacheadmin.domain.CacheEntity;
-
 import java.util.List;
 
 /**
@@ -33,22 +31,12 @@ public interface ICache {
     void set(String key, Object value, int expireTime);
 
     /**
-     * 保存缓存
-     *
-     * @param key
-     * @param value
-     * @param expireTime
-     * @param desc
-     */
-    void set(String key, Object value, int expireTime, String desc);
-
-    /**
      * 删除单个缓存
      *
      * @param key
      * @return
      */
-    void remove(String key);
+    void delete(String key);
 
     /**
      * 删除多个缓存
@@ -56,5 +44,5 @@ public interface ICache {
      * @param keys
      * @return
      */
-    void remove(String... keys);
+    void delete(String... keys);
 }

@@ -100,7 +100,7 @@ public class XMemcachedManager {
     }
 
     /**
-     * Cas	原子性Set
+     * Cas原子性Set
      * @param key
      * @param value
      * @param expTime
@@ -140,7 +140,7 @@ public class XMemcachedManager {
     }
 
     /**
-     * 查询		和Cas匹配使用,可查询缓存Cas版本
+     * 查询和Cas匹配使用,可查询缓存Cas版本
      * @param key
      * @return
      */
