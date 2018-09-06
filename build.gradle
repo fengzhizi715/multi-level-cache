@@ -12,6 +12,6 @@ repositories {
 dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.12'
 
-    compile 'org.projectlombok:lombok:1.16.18'
+    compile 'org.projectlombok:lombok:1.18.0'
     compile 'com.googlecode.xmemcached:xmemcached:2.4.2'
 }

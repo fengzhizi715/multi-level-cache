@@ -1,7 +1,7 @@
-package com.cv4j.cacheadmin.memcached;
+package cn.netdiscovery.cacheadmin.memcached;
 
-import com.cv4j.cacheadmin.config.Constant;
-import com.cv4j.cacheadmin.utils.PropertiesUtils;
+import cn.netdiscovery.cacheadmin.config.Constant;
+import cn.netdiscovery.cacheadmin.utils.PropertiesUtils;
 import lombok.extern.slf4j.Slf4j;
 import net.rubyeye.xmemcached.GetsResponse;
 import net.rubyeye.xmemcached.MemcachedClient;

@@ -1,4 +1,4 @@
-package com.cv4j.cacheadmin.cache;
+package cn.netdiscovery.cacheadmin.cache;
 
 import com.cv4j.cacheadmin.domain.CacheEntity;
 

@@ -1,4 +1,4 @@
-package com.cv4j.cacheadmin.utils;
+package cn.netdiscovery.cacheadmin.utils;
 
 import lombok.extern.slf4j.Slf4j;
 
