@@ -1,2 +1,5 @@
-rootProject.name = 'admin'
+rootProject.name = 'cache'
+include 'cache-common'
+include 'cache-core'
+include 'cache-admin'
 

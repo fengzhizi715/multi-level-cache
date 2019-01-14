@@ -1,12 +1,19 @@
 # Java class files
 *.class
+*~
 
 .idea
 .DS_Store
 
 .gradle
 build/
+out/
 gradlew
 gradlew.bat
 
-log/
+
+# Eclipse Project Files
+
+.classpath
+.project
+.settings/
