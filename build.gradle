@@ -2,6 +2,15 @@ plugins {
     id 'java'
 }
 
+ext {
+    libraries = [
+
+            rxjava                    : "2.2.4",
+
+            rxcache                   : "1.1.5"
+    ]
+}
+
 group 'cn.netdiscovery'
 version '1.0-SNAPSHOT'
 
