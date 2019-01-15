@@ -34,7 +34,7 @@ public class Configuration {
         return configs.keySet();
     }
 
-    public static Object get(String key) {
+    public static Object getConfig(String key) {
 
         return configs.get(key);
     }
