@@ -4,8 +4,11 @@ plugins {
 
 ext {
     libraries = [
-
             rxjava                    : "2.2.4",
+
+            lombok                    : "1.18.0",
+
+            logback                   : "1.2.3",
 
             tony_common_utils         : "1.2.6",
 
