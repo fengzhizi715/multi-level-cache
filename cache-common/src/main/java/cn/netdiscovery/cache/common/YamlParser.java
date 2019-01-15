@@ -12,7 +12,7 @@ import java.util.Map;
 /**
  * Created by tony on 2019-01-15.
  */
-public class HashTypeYaml {
+public class YamlParser {
 
     private static final String DEFAULT_DELIMITER = "/";
     private static final String DEFAULT_CHARSET_NAME = "UTF-8";
@@ -24,7 +24,7 @@ public class HashTypeYaml {
     /**
      * Creates the instance using default number of white space and the delimiter of keys.
      */
-    public HashTypeYaml() {
+    public YamlParser() {
         this(2, DEFAULT_DELIMITER);
     }
 
@@ -33,7 +33,7 @@ public class HashTypeYaml {
      *
      * @param indentWhiteSpaceNumber Number of white space for one indent.
      */
-    public HashTypeYaml(int indentWhiteSpaceNumber) {
+    public YamlParser(int indentWhiteSpaceNumber) {
         this(indentWhiteSpaceNumber, DEFAULT_DELIMITER);
     }
 
@@ -42,7 +42,7 @@ public class HashTypeYaml {
      *
      * @param delimiter The delimiter of keys.
      */
-    public HashTypeYaml(String delimiter) {
+    public YamlParser(String delimiter) {
         this(2, delimiter);
     }
 
@@ -52,7 +52,7 @@ public class HashTypeYaml {
      * @param indentWhiteSpaceNumber Number of white space for one indent.
      * @param delimiter              The delimiter of keys.
      */
-    public HashTypeYaml(int indentWhiteSpaceNumber, String delimiter) {
+    public YamlParser(int indentWhiteSpaceNumber, String delimiter) {
 
         if (indentWhiteSpaceNumber < 2) {
             throw new IllegalArgumentException("`indentWhiteSpaceNumber` must be greater than or equal to 2");
