@@ -2,6 +2,7 @@ package cn.netdiscovery.cache.redis;
 
 import redis.clients.jedis.BitOP;
 
+import java.io.Closeable;
 import java.lang.reflect.Type;
 import java.util.List;
 import java.util.Map;
@@ -10,7 +11,7 @@ import java.util.Set;
 /**
  * Created by tony on 2019-01-14.
  */
-public interface IRedis {
+public interface IRedisService extends Closeable  {
 
     /**
      * 设置键值对，返回OK表示成功
