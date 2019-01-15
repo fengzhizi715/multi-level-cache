@@ -10,6 +10,7 @@ sourceCompatibility = 1.8
 def libs = rootProject.ext.libraries // 库
 
 repositories {
+    jcenter()
     mavenCentral()
 }
 
@@ -22,4 +23,7 @@ dependencies {
     implementation "ch.qos.logback:logback-core:${libs.logback}"
     implementation "ch.qos.logback:logback-access:${libs.logback}"
     implementation "org.projectlombok:lombok:${libs.lombok}"
+
+    implementation project(":cache-common")
+    implementation "tony-common:tony-common-utils:${libs.tony_common_utils}"
 }
