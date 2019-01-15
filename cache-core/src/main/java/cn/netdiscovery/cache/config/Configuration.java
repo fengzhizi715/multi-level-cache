@@ -1,5 +1,6 @@
 package cn.netdiscovery.cache.config;
 
+import cn.netdiscovery.cache.common.PropertyParser;
 import cn.netdiscovery.cache.common.YamlParser;
 import com.safframework.tony.common.utils.Preconditions;
 
@@ -14,6 +15,7 @@ import java.util.Set;
 public class Configuration {
 
     private static YamlParser yamlParser;
+    private static PropertyParser propertyParser;
     private static Map<String,Object> configs = new HashMap<>();
 
     static {
@@ -23,6 +25,16 @@ public class Configuration {
             Map<String,Object> yaml = yamlParser.decode(Configuration.class.getResourceAsStream("/application.yaml"));
             if(Preconditions.isNotBlank(yaml)) {
                 configs.putAll(yaml);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        propertyParser = new PropertyParser();
+        try {
+            Map<String,Object> property = propertyParser.decode(Configuration.class.getResourceAsStream("/application.properties"));
+            if (Preconditions.isNotBlank(property)) {
+                configs.putAll(property);
             }
         } catch (IOException e) {
             e.printStackTrace();
