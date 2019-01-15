@@ -410,7 +410,7 @@ public interface IRedisService extends Closeable  {
     <T> boolean bloomcons(String key, T value);
 
 
-    /********** 一下为分布式锁相关操作 ************/
+    /********** 以下为分布式锁相关操作 ************/
 
     /**
      * 获取分布式锁，返回true表示获取成功

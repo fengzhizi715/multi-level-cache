@@ -41,6 +41,10 @@ public class Configuration {
         }
     }
 
+    private Configuration() {
+        throw new UnsupportedOperationException();
+    }
+
     public static Set<String> keys() {
 
         return configs.keySet();
