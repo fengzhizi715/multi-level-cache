@@ -407,7 +407,7 @@ public interface IRedisService extends Closeable  {
      * 判断指定值在BloomFilter中是否已经存在，返回True表示存在，返回false表示不存在
      * @param value 值
      */
-    <T> boolean bloomcons(String key, T value);
+    <T> boolean bloomcontains(String key, T value);
 
 
     /********** 以下为分布式锁相关操作 ************/
