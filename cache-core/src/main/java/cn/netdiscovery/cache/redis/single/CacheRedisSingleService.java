@@ -960,9 +960,11 @@ public class CacheRedisSingleService implements IRedisService {
 
     @Override
     public boolean getDistributedLock(String lockKey, String requestId, int expireTime) {
+
         if (Preconditions.isBlank(lockKey) || requestId == null) {
             return false;
         }
+
         try (Jedis jedis = jedisPool.getResource()) {
             String result = jedis.set(lockKey, requestId, SET_IF_NOT_EXIST, SET_WITH_EXPIRE_TIME, expireTime);
             return LOCK_SUCCESS.equals(result);
@@ -974,9 +976,11 @@ public class CacheRedisSingleService implements IRedisService {
 
     @Override
     public boolean releaseDistributedLock(String lockKey, String requestId) {
+
         if (Preconditions.isBlank(lockKey) || requestId == null) {
             return false;
         }
+
         try (Jedis jedis = jedisPool.getResource()) {
             String script = "if redis.call('get', KEYS[1]) == ARGV[1] then return redis.call('del', KEYS[1]) else return 0 end";
             Object result = jedis.eval(script, Collections.singletonList(lockKey), Collections.singletonList(requestId));
@@ -990,5 +994,9 @@ public class CacheRedisSingleService implements IRedisService {
     @Override
     public void close() throws IOException {
 
+        if (jedisPool!=null) {
+
+            jedisPool.destroy();
+        }
     }
 }
