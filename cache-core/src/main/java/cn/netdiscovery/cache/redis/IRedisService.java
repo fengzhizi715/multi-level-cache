@@ -418,7 +418,7 @@ public interface IRedisService extends Closeable  {
      * @param requestId requestId
      * @param expireTime 过期时间，单位为毫秒
      */
-    boolean getDistributedLock(String lockKey, String requestId, int expireTime);
+    boolean tryDistributedLock(String lockKey, String requestId, int expireTime);
 
     /**
      * 释放分布式锁，返回true表示释放成功

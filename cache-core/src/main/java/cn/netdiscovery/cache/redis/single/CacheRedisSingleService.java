@@ -4,6 +4,7 @@ import cn.netdiscovery.cache.common.BooleanUtils;
 import cn.netdiscovery.cache.common.NumberUtils;
 import cn.netdiscovery.cache.common.SerializableUtils;
 import cn.netdiscovery.cache.config.Configuration;
+import cn.netdiscovery.cache.config.Constant;
 import cn.netdiscovery.cache.redis.IRedisService;
 import cn.netdiscovery.cache.utils.BitmapHashUtils;
 import com.safframework.tony.common.utils.Preconditions;
@@ -19,11 +20,6 @@ import java.util.*;
  */
 @Slf4j
 public class CacheRedisSingleService implements IRedisService {
-
-    private static final String LOCK_SUCCESS = "OK";
-    private static final String SET_IF_NOT_EXIST = "NX";
-    private static final String SET_WITH_EXPIRE_TIME = "PX";
-    private static final Long RELEASE_SUCCESS = 1L;
 
     private JedisPool jedisPool;
 
@@ -959,15 +955,15 @@ public class CacheRedisSingleService implements IRedisService {
     }
 
     @Override
-    public boolean getDistributedLock(String lockKey, String requestId, int expireTime) {
+    public boolean tryDistributedLock(String lockKey, String requestId, int expireTime) {
 
         if (Preconditions.isBlank(lockKey) || requestId == null) {
             return false;
         }
 
         try (Jedis jedis = jedisPool.getResource()) {
-            String result = jedis.set(lockKey, requestId, SET_IF_NOT_EXIST, SET_WITH_EXPIRE_TIME, expireTime);
-            return LOCK_SUCCESS.equals(result);
+            String result = jedis.set(lockKey, requestId, Constant.SET_IF_NOT_EXIST, Constant.SET_WITH_EXPIRE_TIME, expireTime);
+            return Constant.LOCK_SUCCESS.equals(result);
         } catch (Exception e) {
             log.error("getDistributedLock error, key: {}", lockKey, e);
             return false;
@@ -984,7 +980,7 @@ public class CacheRedisSingleService implements IRedisService {
         try (Jedis jedis = jedisPool.getResource()) {
             String script = "if redis.call('get', KEYS[1]) == ARGV[1] then return redis.call('del', KEYS[1]) else return 0 end";
             Object result = jedis.eval(script, Collections.singletonList(lockKey), Collections.singletonList(requestId));
-            return RELEASE_SUCCESS.equals(result);
+            return Constant.RELEASE_SUCCESS.equals(result);
         } catch (Exception e) {
             log.error("releaseDistributedLock error, key: {}", lockKey, e);
             return false;
