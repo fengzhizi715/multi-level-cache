@@ -18,4 +18,5 @@ dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.12'
 
     implementation "tony-common:tony-common-utils:${libs.tony_common_utils}"
+    implementation 'com.google.code.gson:gson:2.8.5'
 }
