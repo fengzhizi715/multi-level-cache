@@ -26,4 +26,6 @@ dependencies {
 
     implementation project(":cache-common")
     implementation "tony-common:tony-common-utils:${libs.tony_common_utils}"
+
+    implementation "com.safframework.rxcache:rxcache-core:${libs.rxcache}"
 }
