@@ -1,4 +1,4 @@
-package cn.netdiscovery.cache.redis.single;
+package cn.netdiscovery.cache.redis.standalone;
 
 import cn.netdiscovery.cache.common.BooleanUtils;
 import cn.netdiscovery.cache.common.NumberUtils;
@@ -19,11 +19,11 @@ import java.util.*;
  * Created by tony on 2019-01-15.
  */
 @Slf4j
-public class CacheRedisSingleService implements IRedisService {
+public class CacheRedisStandaloneService implements IRedisService {
 
     private JedisPool jedisPool;
 
-    public CacheRedisSingleService() {
+    public CacheRedisStandaloneService() {
 
         JedisPoolConfig config = new JedisPoolConfig();
         config.setMaxTotal(NumberUtils.toInt((String) Configuration.getConfig(Constant.CACHE_REDIS_CONNECTION_MAX_TOTAL), 100));
