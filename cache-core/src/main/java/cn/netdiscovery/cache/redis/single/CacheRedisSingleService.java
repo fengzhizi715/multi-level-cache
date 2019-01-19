@@ -26,18 +26,18 @@ public class CacheRedisSingleService implements IRedisService {
     public CacheRedisSingleService() {
 
         JedisPoolConfig config = new JedisPoolConfig();
-        config.setMaxTotal(NumberUtils.toInt((String) Configuration.getConfig("cache.redis.connection.max.total"), 100));
-        config.setMaxIdle(NumberUtils.toInt((String) Configuration.getConfig("cache.redis.connection.max.idle"), 50));
-        config.setMaxWaitMillis(NumberUtils.toInt((String) Configuration.getConfig("cache.redis.max.wait.millis"), 5000));
+        config.setMaxTotal(NumberUtils.toInt((String) Configuration.getConfig(Constant.CACHE_REDIS_CONNECTION_MAX_TOTAL), 100));
+        config.setMaxIdle(NumberUtils.toInt((String) Configuration.getConfig(Constant.CACHE_REDIS_CONNECTION_MAX_IDLE), 50));
+        config.setMaxWaitMillis(NumberUtils.toInt((String) Configuration.getConfig(Constant.CACHE_REDIS_MAX_WAIT_MILLIS), 5000));
         config.setTestOnBorrow(true);
 
-        String hostsStr = (String) Configuration.getConfig("cache.redis.nodes");
+        String hostsStr = (String) Configuration.getConfig(Constant.CACHE_REDIS_NODES);
         //直接使用第0个database
         int database = 0;
         String[] strings = hostsStr.split(":");
         String host = strings[0];
         int port = strings.length > 1 ? NumberUtils.toInt(strings[1].trim(), 6379) : 6379;
-        String password = (String) Configuration.getConfig("cache.redis.password");
+        String password = (String) Configuration.getConfig(Constant.CACHE_REDIS_PASSWORD);
 
         jedisPool = new JedisPool(config, host, port, 2000, password, database);
     }
@@ -978,8 +978,8 @@ public class CacheRedisSingleService implements IRedisService {
         }
 
         try (Jedis jedis = jedisPool.getResource()) {
-            String script = "if redis.call('get', KEYS[1]) == ARGV[1] then return redis.call('del', KEYS[1]) else return 0 end";
-            Object result = jedis.eval(script, Collections.singletonList(lockKey), Collections.singletonList(requestId));
+            String luaScript = "if redis.call('get', KEYS[1]) == ARGV[1] then return redis.call('del', KEYS[1]) else return 0 end";
+            Object result = jedis.eval(luaScript, Collections.singletonList(lockKey), Collections.singletonList(requestId));
             return Constant.RELEASE_SUCCESS.equals(result);
         } catch (Exception e) {
             log.error("releaseDistributedLock error, key: {}", lockKey, e);
