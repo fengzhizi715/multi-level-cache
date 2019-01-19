@@ -11,6 +11,7 @@ public class Constant {
     public static final Long RELEASE_SUCCESS = 1L;
 
 
+    public static final String CACHE_RXCACHE_ENABLE             = "cache.rxcache.enable";
     public static final String CACHE_REDIS_CONNECTION_MAX_TOTAL = "cache.redis.connection.max.total";
     public static final String CACHE_REDIS_CONNECTION_MAX_IDLE  = "cache.redis.connection.max.idle";
     public static final String CACHE_REDIS_MAX_WAIT_MILLIS      = "cache.redis.max.wait.millis";
