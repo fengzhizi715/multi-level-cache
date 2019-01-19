@@ -19,7 +19,7 @@ public class Cache {
 
     static {
 
-        RXCACHE_ENABLE = BooleanUtils.toBoolean((Boolean) Configuration.getConfig(Constant.CACHE_RXCACHE_ENABLE));
+        RXCACHE_ENABLE = BooleanUtils.toBoolean((String) Configuration.getConfig(Constant.CACHE_RXCACHE_ENABLE));
 
         if (RXCACHE_ENABLE) {
 
@@ -35,6 +35,4 @@ public class Cache {
                 break;
         }
     }
-
-
 }

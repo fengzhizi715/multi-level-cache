@@ -119,6 +119,11 @@ public class YamlParser {
      * @throws IOException Raises exception if I/O error is occurred.
      */
     public Map<String, Object> decode(InputStream is, String charsetName) throws IOException {
+
+        if (is==null) {
+            return null;
+        }
+
         Map<String, Object> hash = new HashMap<String, Object>();
         BufferedReader reader = new BufferedReader(new InputStreamReader(is, charsetName));
         ArrayList<Object> list = null;

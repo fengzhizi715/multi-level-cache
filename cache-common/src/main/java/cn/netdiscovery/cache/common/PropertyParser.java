@@ -24,6 +24,10 @@ public final class PropertyParser {
 
     public Map<String,Object> decode(InputStream inputStream) throws IOException {
 
+        if (inputStream==null) {
+            return null;
+        }
+
         try {
             properties.load(inputStream);
         } finally {
