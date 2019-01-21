@@ -19,4 +19,19 @@ public class NumberUtils {
             return defaultValue;
         }
     }
+
+    public static long toLong(final String str) {
+        return toLong(str, 0L);
+    }
+
+    public static long toLong(final String str, final long defaultValue) {
+        if (str == null) {
+            return defaultValue;
+        }
+        try {
+            return Long.parseLong(str);
+        } catch (final NumberFormatException nfe) {
+            return defaultValue;
+        }
+    }
 }

@@ -32,6 +32,7 @@ public class CacheRedisStandaloneService implements IRedisService {
         config.setTestOnBorrow(true);
 
         String hostsStr = (String) Configuration.getConfig(Constant.CACHE_REDIS_NODES);
+
         //直接使用第0个database
         int database = 0;
         String[] strings = hostsStr.split(":");

@@ -28,4 +28,7 @@ dependencies {
     implementation "tony-common:tony-common-utils:${libs.tony_common_utils}"
 
     implementation "com.safframework.rxcache:rxcache-core:${libs.rxcache}"
+    implementation "com.safframework.rxcache:rxcache-guava-cache:${libs.rxcache}"
+    implementation "com.safframework.rxcache:rxcache-caffeine:${libs.rxcache}"
+    implementation "io.reactivex.rxjava2:rxjava:${libs.rxjava}"
 }
