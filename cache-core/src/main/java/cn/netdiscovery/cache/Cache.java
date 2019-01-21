@@ -2,6 +2,7 @@ package cn.netdiscovery.cache;
 
 import cn.netdiscovery.cache.common.BooleanUtils;
 import cn.netdiscovery.cache.common.NumberUtils;
+import cn.netdiscovery.cache.common.SerializableUtils;
 import cn.netdiscovery.cache.config.Configuration;
 import cn.netdiscovery.cache.config.Constant;
 import cn.netdiscovery.cache.redis.IRedisService;
@@ -74,8 +75,13 @@ public class Cache {
         }
     }
 
-    public static void main(String[] args) {
+    public static <T> String set(String key, T value, int seconds) {
 
-        System.out.println(Configuration.keys());
+        if (RXCACHE_ENABLE) {
+            rxCache.save(key, SerializableUtils.toJson(value),seconds*1000);
+        }
+        return redis.set(key, value, seconds);
     }
+
+
 }
