@@ -26,6 +26,11 @@ public class SerializableUtils {
 
     public static String toJson(Object data){
 
+        if (data instanceof String) {
+
+            return (String) data;
+        }
+
         return gson.toJson(data);
     }
 }

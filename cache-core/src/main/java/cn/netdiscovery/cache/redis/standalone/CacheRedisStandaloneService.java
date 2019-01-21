@@ -54,12 +54,7 @@ public class CacheRedisStandaloneService implements IRedisService {
             return null;
         }
         try (Jedis jedis = jedisPool.getResource()) {
-            String set;
-            if (value instanceof String) {
-                set = jedis.set(key, (String) value);
-            } else {
-                set = jedis.set(key, SerializableUtils.toJson(value));
-            }
+            String set = jedis.set(key, SerializableUtils.toJson(value));
             if (seconds > 0) {
                 jedis.expire(key, seconds);
             }
@@ -655,12 +650,7 @@ public class CacheRedisStandaloneService implements IRedisService {
             return null;
         }
         try (Jedis jedis = jedisPool.getResource()) {
-            Long hset;
-            if (value instanceof String) {
-                hset = jedis.hset(key, field, (String) value);
-            } else {
-                hset = jedis.hset(key, field, SerializableUtils.toJson(value));
-            }
+            Long hset = jedis.hset(key, field, SerializableUtils.toJson(value));
             if (seconds > 0) {
                 jedis.expire(key, seconds);
             }

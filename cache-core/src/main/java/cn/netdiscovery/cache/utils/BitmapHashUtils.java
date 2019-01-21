@@ -33,11 +33,8 @@ public class BitmapHashUtils {
         long[] offsets = new long[hashFunctionCount];
         byte[] bytes;
 
-        if (value instanceof String) {
-            bytes = ((String) value).getBytes(StandardCharsets.UTF_8);
-        } else {
-            bytes = SerializableUtils.toJson(value).getBytes(StandardCharsets.UTF_8);
-        }
+        bytes = SerializableUtils.toJson(value).getBytes(StandardCharsets.UTF_8);
+
         int hash1 = MurmurHash.hash(bytes, 0);
         int hash2 = MurmurHash.hash(bytes, hash1);
         for (int i = 0; i < hashFunctionCount; ++i) {
