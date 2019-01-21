@@ -13,7 +13,8 @@ public class Constant {
 
     public static final String CACHE_RXCACHE_ENABLE             = "cache.rxcache.enable";
     public static final String CACHE_RXCACHE_TYPE               = "cache.rxcache.type";
-    public static final String CACHE_RXCACHE_MAXSIZE            = "cache.rxcache.maxSize";
+    public static final String CACHE_RXCACHE_MEMORY_TYPE        = "cache.rxcache.memory.type";
+    public static final String CACHE_RXCACHE_MEMORY_MAXSIZE     = "cache.rxcache.memory.maxSize";
 
     public static final String CACHE_REDIS_CONNECTION_MAX_TOTAL = "cache.redis.connection.max.total";
     public static final String CACHE_REDIS_CONNECTION_MAX_IDLE  = "cache.redis.connection.max.idle";
@@ -23,6 +24,9 @@ public class Constant {
     public static final String CACHE_REDIS_PASSWORD             = "cache.redis.password";
 
 
+    public static final String FIFO       = "fifo";
+    public static final String LRU        = "lru";
+    public static final String LFU        = "lfu";
     public static final String CAFFEINE   = "caffeine";
     public static final String GUAVA      = "guava";
 

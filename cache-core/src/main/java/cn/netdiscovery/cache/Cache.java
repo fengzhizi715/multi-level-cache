@@ -10,6 +10,9 @@ import com.safframework.rxcache.RxCache;
 import com.safframework.rxcache.memory.CaffeineImpl;
 import com.safframework.rxcache.memory.GuavaCacheImpl;
 import com.safframework.rxcache.memory.Memory;
+import com.safframework.rxcache.memory.impl.FIFOMemoryImpl;
+import com.safframework.rxcache.memory.impl.LFUMemoryImpl;
+import com.safframework.rxcache.memory.impl.LRUMemoryImpl;
 
 /**
  * Created by tony on 2019-01-15.
@@ -28,9 +31,22 @@ public class Cache {
         if (RXCACHE_ENABLE) {
 
             String type = (String) Configuration.getConfig(Constant.CACHE_RXCACHE_TYPE);
-            long maxSize = NumberUtils.toInt((String) Configuration.getConfig(Constant.CACHE_RXCACHE_MAXSIZE),100);
+            String memType = (String) Configuration.getConfig(Constant.CACHE_RXCACHE_MEMORY_TYPE);
+            long maxSize = NumberUtils.toInt((String) Configuration.getConfig(Constant.CACHE_RXCACHE_MEMORY_TYPE),100);
             Memory memory = null;
-            switch (type) {
+            switch (memType) {
+                case Constant.FIFO:
+                    memory = new FIFOMemoryImpl(maxSize);
+                    break;
+
+                case Constant.LRU:
+                    memory = new LRUMemoryImpl(maxSize);
+                    break;
+
+                case Constant.LFU:
+                    memory = new LFUMemoryImpl(maxSize);
+                    break;
+
                 case Constant.CAFFEINE:
                     memory = new CaffeineImpl(maxSize);
                     break;
