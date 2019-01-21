@@ -8,12 +8,16 @@ import cn.netdiscovery.cache.config.Constant;
 import cn.netdiscovery.cache.redis.IRedisService;
 import cn.netdiscovery.cache.redis.standalone.CacheRedisStandaloneService;
 import com.safframework.rxcache.RxCache;
+import com.safframework.rxcache.domain.Record;
 import com.safframework.rxcache.memory.CaffeineImpl;
 import com.safframework.rxcache.memory.GuavaCacheImpl;
 import com.safframework.rxcache.memory.Memory;
 import com.safframework.rxcache.memory.impl.FIFOMemoryImpl;
 import com.safframework.rxcache.memory.impl.LFUMemoryImpl;
 import com.safframework.rxcache.memory.impl.LRUMemoryImpl;
+import com.safframework.tony.common.utils.Preconditions;
+
+import java.lang.reflect.Type;
 
 /**
  * Created by tony on 2019-01-15.
@@ -75,6 +79,14 @@ public class Cache {
         }
     }
 
+    public static <T> String set(String key, T value) {
+
+        if (RXCACHE_ENABLE) {
+            rxCache.save(key, SerializableUtils.toJson(value));
+        }
+        return redis.set(key, value);
+    }
+
     public static <T> String set(String key, T value, int seconds) {
 
         if (RXCACHE_ENABLE) {
@@ -83,5 +95,29 @@ public class Cache {
         return redis.set(key, value, seconds);
     }
 
+    public static <T> Long setnx(String key, T value) {
+        return redis.setnx(key, value);
+    }
 
+    public static <T> Long setnx(String key, T value, int seconds) {
+        return redis.setnx(key, value, seconds);
+    }
+
+    public static <T> T get(String key, Type type) {
+
+        if (RXCACHE_ENABLE) {
+            Record<T> record = rxCache.get(key,type);
+
+            if (record!=null && !record.isExpired()) {
+
+                return record.getData();
+            }
+        }
+
+        String value = redis.get(key);
+        if (RXCACHE_ENABLE && Preconditions.isNotBlank(value)) {
+            rxCache.save(key, value);
+        }
+        return SerializableUtils.fromJson(value, type);
+    }
 }
