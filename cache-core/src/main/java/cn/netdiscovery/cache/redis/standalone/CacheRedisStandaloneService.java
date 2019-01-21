@@ -50,10 +50,11 @@ public class CacheRedisStandaloneService implements IRedisService {
 
     @Override
     public <T> String set(String key, T value, int seconds) {
+
         if (Preconditions.isBlank(key) || value == null || seconds < 0) {
             return null;
         }
-        try (Jedis jedis = jedisPool.getResource()) {
+        try (Jedis jedis = jedisPool.getResource()) { // 使用了 try-with-resource 所以无须再关闭jedis
             String set = jedis.set(key, SerializableUtils.toJson(value));
             if (seconds > 0) {
                 jedis.expire(key, seconds);
@@ -72,9 +73,11 @@ public class CacheRedisStandaloneService implements IRedisService {
 
     @Override
     public <T> Long setnx(String key, T value, int seconds) {
+
         if (Preconditions.isBlank(key) || value == null) {
             return null;
         }
+
         try (Jedis jedis = jedisPool.getResource()) {
             Long setnx = jedis.setnx(key, SerializableUtils.toJson(value));
             if (seconds > 0) {
@@ -89,9 +92,11 @@ public class CacheRedisStandaloneService implements IRedisService {
 
     @Override
     public String get(String key) {
+
         if (Preconditions.isBlank(key)) {
             return null;
         }
+
         String value = null;
         try (Jedis jedis = jedisPool.getResource()) {
             value = jedis.get(key);
@@ -123,9 +128,11 @@ public class CacheRedisStandaloneService implements IRedisService {
 
     @Override
     public Long incr(String key, Integer value, int seconds) {
+
         if (Preconditions.isBlank(key) || value == null || seconds < 0) {
             return null;
         }
+
         Long total = null;
         try (Jedis jedis = jedisPool.getResource()) {
             total = jedis.incrBy(key, value);
@@ -142,9 +149,11 @@ public class CacheRedisStandaloneService implements IRedisService {
 
     @Override
     public Long incr(String key, Integer value) {
+
         if (Preconditions.isBlank(key) || value == null || value == 0) {
             return null;
         }
+
         Long total = null;
         try (Jedis jedis = jedisPool.getResource()) {
             total = jedis.incrBy(key, value);
@@ -156,9 +165,11 @@ public class CacheRedisStandaloneService implements IRedisService {
 
     @Override
     public Long decr(String key, Integer value) {
+
         if (Preconditions.isBlank(key) || value == null || value == 0) {
             return null;
         }
+
         Long total = null;
         try (Jedis jedis = jedisPool.getResource()) {
             total = jedis.decrBy(key, value);
@@ -170,9 +181,11 @@ public class CacheRedisStandaloneService implements IRedisService {
 
     @Override
     public Long decr(String key, Integer value, int seconds) {
+
         if (Preconditions.isBlank(key) || value == null || value == 0 || seconds < 0) {
             return null;
         }
+
         Long total = null;
         try (Jedis jedis = jedisPool.getResource()) {
             total = jedis.decrBy(key, value);
@@ -187,9 +200,11 @@ public class CacheRedisStandaloneService implements IRedisService {
 
     @Override
     public Long expire(String key, int seconds) {
+
         if (Preconditions.isBlank(key) || seconds < 0) {
             return null;
         }
+
         try (Jedis jedis = jedisPool.getResource()) {
             return jedis.expire(key, seconds);
         } catch (Exception e) {
@@ -200,9 +215,11 @@ public class CacheRedisStandaloneService implements IRedisService {
 
     @Override
     public Long persist(String key) {
+
         if (Preconditions.isBlank(key)) {
             return null;
         }
+
         try (Jedis jedis = jedisPool.getResource()) {
             return jedis.persist(key);
         } catch (Exception e) {
@@ -213,9 +230,11 @@ public class CacheRedisStandaloneService implements IRedisService {
 
     @Override
     public boolean exist(String key) {
+
         if (Preconditions.isBlank(key)) {
             return false;
         }
+
         boolean exist = false;
         try (Jedis jedis = jedisPool.getResource()) {
             exist = jedis.exists(key);
@@ -227,9 +246,11 @@ public class CacheRedisStandaloneService implements IRedisService {
 
     @Override
     public Long del(String key) {
+
         if (Preconditions.isBlank(key)) {
             return null;
         }
+
         try (Jedis jedis = jedisPool.getResource()) {
             return jedis.del(key);
         } catch (Exception e) {
@@ -240,9 +261,11 @@ public class CacheRedisStandaloneService implements IRedisService {
 
     @Override
     public void del(String... keys) {
+
         if (keys == null || keys.length == 0) {
             return;
         }
+
         try (Jedis jedis = jedisPool.getResource()) {
             jedis.del(keys);
         } catch (Exception e) {
@@ -257,6 +280,7 @@ public class CacheRedisStandaloneService implements IRedisService {
 
     @Override
     public <T> Long lpush(String key, T value, int seconds) {
+
         if (Preconditions.isBlank(key) || value == null || seconds < 0) {
             return null;
         }
@@ -283,6 +307,7 @@ public class CacheRedisStandaloneService implements IRedisService {
 
     @Override
     public <T> Long lpush(String key, List<T> values, int seconds) {
+
         if (Preconditions.isBlank(key) || Preconditions.isBlank(values) || seconds < 0) {
             return null;
         }
@@ -310,6 +335,7 @@ public class CacheRedisStandaloneService implements IRedisService {
 
     @Override
     public <T> Long rpush(String key, T value, int seconds) {
+
         if (Preconditions.isBlank(key) || value == null || seconds < 0) {
             return null;
         }
@@ -333,6 +359,7 @@ public class CacheRedisStandaloneService implements IRedisService {
 
     @Override
     public <T> Long rpush(String key, List<T> values, int seconds) {
+
         if (Preconditions.isBlank(key) || Preconditions.isBlank(values) || seconds < 0) {
             return null;
         }
@@ -355,6 +382,7 @@ public class CacheRedisStandaloneService implements IRedisService {
 
     @Override
     public List<String> lrange(String key) {
+
         if (Preconditions.isBlank(key)) {
             return null;
         }
@@ -373,6 +401,7 @@ public class CacheRedisStandaloneService implements IRedisService {
 
     @Override
     public List<String> lrange(String key, long end) {
+
         if (Preconditions.isBlank(key) || end < 0) {
             return null;
         }
@@ -391,6 +420,7 @@ public class CacheRedisStandaloneService implements IRedisService {
 
     @Override
     public List<String> lrange(String key, long start, long end) {
+
         if (Preconditions.isBlank(key) || start < 0 || end < 0) {
             return null;
         }
@@ -404,6 +434,7 @@ public class CacheRedisStandaloneService implements IRedisService {
 
     @Override
     public <T> List<T> lrange(String key, long start, long end, Class<T> c) {
+
         if (Preconditions.isBlank(key) || start < 0 || end < 0 || c == null) {
             return null;
         }
@@ -433,6 +464,7 @@ public class CacheRedisStandaloneService implements IRedisService {
 
     @Override
     public String lindex(String key, int index) {
+
         if (Preconditions.isBlank(key) || index < 0) {
             return null;
         }
@@ -446,6 +478,7 @@ public class CacheRedisStandaloneService implements IRedisService {
 
     @Override
     public <T> T lindex(String key, int index, Class<T> c) {
+
         if (Preconditions.isBlank(key) || index < 0) {
             return null;
         }
@@ -464,6 +497,7 @@ public class CacheRedisStandaloneService implements IRedisService {
 
     @Override
     public Long llen(String key) {
+
         if (Preconditions.isBlank(key)) {
             return null;
         }
@@ -477,6 +511,7 @@ public class CacheRedisStandaloneService implements IRedisService {
 
     @Override
     public void lclear(String key) {
+
         if (Preconditions.isBlank(key)) {
             return;
         }
@@ -490,6 +525,7 @@ public class CacheRedisStandaloneService implements IRedisService {
 
     @Override
     public Long lrem(String key, String value) {
+
         try (Jedis jedis = jedisPool.getResource()) {
             return jedis.lrem(key, 0, value);
         } catch (Exception e) {
@@ -500,6 +536,7 @@ public class CacheRedisStandaloneService implements IRedisService {
 
     @Override
     public <T> Long lrem(String key, T value) {
+
         try (Jedis jedis = jedisPool.getResource()) {
             return jedis.lrem(key, 0, SerializableUtils.toJson(value));
         } catch (Exception e) {
@@ -510,6 +547,7 @@ public class CacheRedisStandaloneService implements IRedisService {
 
     @Override
     public Long lrem(String key, long count, String value) {
+
         try (Jedis jedis = jedisPool.getResource()) {
             return jedis.lrem(key, count, value);
         } catch (Exception e) {
@@ -520,6 +558,7 @@ public class CacheRedisStandaloneService implements IRedisService {
 
     @Override
     public <T> Long lrem(String key, long count, T value) {
+
         try (Jedis jedis = jedisPool.getResource()) {
             return jedis.lrem(key, count, SerializableUtils.toJson(value));
         } catch (Exception e) {
@@ -530,6 +569,7 @@ public class CacheRedisStandaloneService implements IRedisService {
 
     @Override
     public String ltrim(String key, long start, long end) {
+
         if (Preconditions.isBlank(key)) {
             return null;
         }
@@ -543,6 +583,7 @@ public class CacheRedisStandaloneService implements IRedisService {
 
     @Override
     public String lpop(String key) {
+
         if (Preconditions.isBlank(key)) {
             return null;
         }
@@ -556,6 +597,7 @@ public class CacheRedisStandaloneService implements IRedisService {
 
     @Override
     public String rpop(String key) {
+
         if (Preconditions.isBlank(key)) {
             return null;
         }
@@ -574,6 +616,7 @@ public class CacheRedisStandaloneService implements IRedisService {
 
     @Override
     public Long sadd(String key, int seconds, String... values) {
+
         if (Preconditions.isBlank(key) || values == null || values.length == 0) {
             return null;
         }
@@ -591,6 +634,7 @@ public class CacheRedisStandaloneService implements IRedisService {
 
     @Override
     public boolean sismember(String key, String value) {
+
         if (value == null || Preconditions.isBlank(key)) {
             return false;
         }
@@ -605,6 +649,7 @@ public class CacheRedisStandaloneService implements IRedisService {
 
     @Override
     public Set<String> smembers(String key) {
+
         if (Preconditions.isBlank(key)) {
             return null;
         }
@@ -629,6 +674,7 @@ public class CacheRedisStandaloneService implements IRedisService {
 
     @Override
     public <T> Long hset(String key, String field, T value, int seconds) {
+
         if (Preconditions.isBlank(key) || field == null || value == null || seconds < 0) {
             return null;
         }
@@ -669,6 +715,7 @@ public class CacheRedisStandaloneService implements IRedisService {
 
     @Override
     public String hget(String key, String field) {
+
         if (field == null || Preconditions.isBlank(key)) {
             return null;
         }
@@ -683,6 +730,7 @@ public class CacheRedisStandaloneService implements IRedisService {
 
     @Override
     public Long hincr(String key, String field, Integer value) {
+
         if (Preconditions.isBlank(key)) {
             return null;
         }
@@ -697,6 +745,7 @@ public class CacheRedisStandaloneService implements IRedisService {
 
     @Override
     public Long hdecr(String key, String field, Integer value) {
+
         if (Preconditions.isBlank(key)) {
             return null;
         }
@@ -711,6 +760,7 @@ public class CacheRedisStandaloneService implements IRedisService {
 
     @Override
     public Map<String, String> hgetAll(String key) {
+
         if (Preconditions.isBlank(key)) {
             return null;
         }
@@ -725,6 +775,7 @@ public class CacheRedisStandaloneService implements IRedisService {
 
     @Override
     public Long pfadd(String key, String value) {
+
         if (Preconditions.isBlank(key) || value == null) {
             return null;
         }
@@ -738,6 +789,7 @@ public class CacheRedisStandaloneService implements IRedisService {
 
     @Override
     public Long pfadd(String key, String value, int seconds) {
+
         if (Preconditions.isBlank(key) || value == null || seconds < 0) {
             return null;
         }
@@ -755,6 +807,7 @@ public class CacheRedisStandaloneService implements IRedisService {
 
     @Override
     public Long pfcount(String key) {
+
         if (Preconditions.isBlank(key)) {
             return null;
         }
@@ -769,6 +822,7 @@ public class CacheRedisStandaloneService implements IRedisService {
 
     @Override
     public boolean setbit(String key, long offset, boolean value) {
+
         if (Preconditions.isBlank(key)) {
             return false;
         }
@@ -782,6 +836,7 @@ public class CacheRedisStandaloneService implements IRedisService {
 
     @Override
     public boolean setbit(String key, long offset, String value) {
+
         if (Preconditions.isBlank(key)) {
             return false;
         }
@@ -795,6 +850,7 @@ public class CacheRedisStandaloneService implements IRedisService {
 
     @Override
     public boolean getbit(String key, long offset) {
+
         if (Preconditions.isBlank(key)) {
             return false;
         }
@@ -808,6 +864,7 @@ public class CacheRedisStandaloneService implements IRedisService {
 
     @Override
     public Long bitcount(String key) {
+
         if (Preconditions.isBlank(key)) {
             return null;
         }
@@ -821,6 +878,7 @@ public class CacheRedisStandaloneService implements IRedisService {
 
     @Override
     public Long bitcount(String key, long start, long end) {
+
         if (Preconditions.isBlank(key)) {
             return null;
         }
@@ -834,6 +892,7 @@ public class CacheRedisStandaloneService implements IRedisService {
 
     @Override
     public Long bitop(BitOP op, String destKey, String... srcKeys) {
+
         if (op == null || Preconditions.isBlank(destKey) || srcKeys == null || srcKeys.length == 0) {
             return null;
         }
@@ -847,6 +906,7 @@ public class CacheRedisStandaloneService implements IRedisService {
 
     @Override
     public List<Long> bitfield(String key, String... arguments) {
+
         if (Preconditions.isBlank(key) || arguments == null || arguments.length == 0) {
             return null;
         }
@@ -860,6 +920,7 @@ public class CacheRedisStandaloneService implements IRedisService {
 
     @Override
     public Long bitpos(String key, boolean value) {
+
         if (Preconditions.isBlank(key)) {
             return null;
         }
@@ -873,6 +934,7 @@ public class CacheRedisStandaloneService implements IRedisService {
 
     @Override
     public Long bitpos(String key, boolean value, long start, long end) {
+
         if (Preconditions.isBlank(key)) {
             return null;
         }
@@ -966,7 +1028,7 @@ public class CacheRedisStandaloneService implements IRedisService {
 
         if (jedisPool!=null) {
 
-            jedisPool.destroy();
+            jedisPool.close();
         }
     }
 }
