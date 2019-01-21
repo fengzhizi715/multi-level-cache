@@ -76,12 +76,7 @@ public class CacheRedisStandaloneService implements IRedisService {
             return null;
         }
         try (Jedis jedis = jedisPool.getResource()) {
-            Long setnx;
-            if (value instanceof String) {
-                setnx = jedis.setnx(key, (String) value);
-            } else {
-                setnx = jedis.setnx(key, SerializableUtils.toJson(value));
-            }
+            Long setnx = jedis.setnx(key, SerializableUtils.toJson(value));
             if (seconds > 0) {
                 jedis.expire(key, seconds);
             }
@@ -295,11 +290,7 @@ public class CacheRedisStandaloneService implements IRedisService {
             String[] strings = new String[values.size()];
             for (int i = 0; i < values.size(); i++) {
                 T value = values.get(i);
-                if (value instanceof String) {
-                    strings[i] = (String) value;
-                } else {
-                    strings[i] = SerializableUtils.toJson(value);
-                }
+                strings[i] = SerializableUtils.toJson(value);
             }
             Long lpush = jedis.lpush(key, strings);
             if (seconds > 0) {
@@ -324,11 +315,7 @@ public class CacheRedisStandaloneService implements IRedisService {
         }
         Long lpush;
         try (Jedis jedis = jedisPool.getResource()) {
-            if (value instanceof String) {
-                lpush = jedis.rpush(key, (String) value);
-            } else {
-                lpush = jedis.rpush(key, SerializableUtils.toJson(value));
-            }
+            lpush = jedis.rpush(key, SerializableUtils.toJson(value));
             if (seconds > 0) {
                 jedis.expire(key, seconds);
             }
@@ -353,11 +340,7 @@ public class CacheRedisStandaloneService implements IRedisService {
             ArrayList<String> strings = new ArrayList();
             for (int i = 0; i < values.size(); i++) {
                 T value = values.get(i);
-                if (value instanceof String) {
-                    strings.add((String) value);
-                } else {
-                    strings.add(SerializableUtils.toJson(value));
-                }
+                strings.add(SerializableUtils.toJson(value));
             }
             Long lpush = jedis.rpush(key, strings.toArray(new String[0]));
             if (seconds > 0) {
