@@ -1,6 +1,7 @@
 package cn.netdiscovery.cache.common;
 
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Type;
 
@@ -22,6 +23,10 @@ public class SerializableUtils {
     public static <T> T fromJson(String json, Type type) {
 
         return gson.fromJson(json,type);
+    }
+
+    public static <V> V fromJson(String json, TypeToken<V> typeToken) {
+        return gson.fromJson(json, typeToken.getType());
     }
 
     public static String toJson(Object data){
