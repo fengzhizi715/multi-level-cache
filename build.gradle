@@ -10,9 +10,9 @@ ext {
 
             logback                   : "1.2.3",
 
-            tony_common_utils         : "1.2.6",
+            tony_common_utils         : "1.2.8",
 
-            rxcache                   : "1.1.6"
+            rxcache                   : "1.1.7"
     ]
 }
 
