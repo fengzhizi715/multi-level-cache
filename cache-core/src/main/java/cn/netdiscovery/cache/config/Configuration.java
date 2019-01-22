@@ -5,9 +5,9 @@ import cn.netdiscovery.cache.common.YamlParser;
 import com.safframework.tony.common.utils.Preconditions;
 
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * Created by tony on 2019-01-15.
@@ -16,7 +16,7 @@ public class Configuration {
 
     private static YamlParser yamlParser;
     private static PropertyParser propertyParser;
-    private static Map<String,Object> configs = new HashMap<>();
+    private static Map<String,Object> configs = new ConcurrentHashMap<>();
 
     static {
 
