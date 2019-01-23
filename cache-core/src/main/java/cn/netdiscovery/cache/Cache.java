@@ -36,13 +36,13 @@ public class Cache {
 
     static {
 
-        RXCACHE_ENABLE = BooleanUtils.toBoolean((String) Configuration.getConfig(Constant.CACHE_RXCACHE_ENABLE));
+        RXCACHE_ENABLE = BooleanUtils.toBoolean(Configuration.getConfig(Constant.CACHE_RXCACHE_ENABLE,String.class));
 
         if (RXCACHE_ENABLE) {
 
-            String type = (String) Configuration.getConfig(Constant.CACHE_RXCACHE_TYPE);
-            String memType = (String) Configuration.getConfig(Constant.CACHE_RXCACHE_MEMORY_TYPE);
-            long maxSize = NumberUtils.toInt((String) Configuration.getConfig(Constant.CACHE_RXCACHE_MEMORY_TYPE),100);
+            String type = Configuration.getConfig(Constant.CACHE_RXCACHE_TYPE,String.class);
+            String memType = Configuration.getConfig(Constant.CACHE_RXCACHE_MEMORY_TYPE,String.class);
+            long maxSize = NumberUtils.toInt(Configuration.getConfig(Constant.CACHE_RXCACHE_MEMORY_TYPE,String.class),100);
             Memory memory = null;
             switch (memType) {
                 case Constant.FIFO:
@@ -73,7 +73,7 @@ public class Cache {
             rxCache = RxCache.getRxCache();
         }
 
-        String redisCacheType = (String) Configuration.getConfig(Constant.CACHE_REDIS_TYPE);
+        String redisCacheType = Configuration.getConfig(Constant.CACHE_REDIS_TYPE,String.class);
         switch (redisCacheType) {
 
             case Constant.STANDALONE:

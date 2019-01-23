@@ -5,6 +5,7 @@ import cn.netdiscovery.cache.common.YamlParser;
 import com.safframework.tony.common.utils.Preconditions;
 
 import java.io.IOException;
+import java.lang.reflect.Type;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
@@ -53,5 +54,10 @@ public class Configuration {
     public static Object getConfig(String key) {
 
         return configs.get(key);
+    }
+
+    public static <T> T getConfig(String key, Class<T> clazz) {
+
+        return (T)configs.get(key);
     }
 }
