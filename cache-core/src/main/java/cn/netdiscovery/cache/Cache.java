@@ -36,51 +36,54 @@ public class Cache {
 
     static {
 
-        RXCACHE_ENABLE = BooleanUtils.toBoolean(Configuration.getConfig(Constant.CACHE_RXCACHE_ENABLE,String.class));
+        try {
+            RXCACHE_ENABLE = BooleanUtils.toBoolean(Configuration.getConfig(Constant.CACHE_RXCACHE_ENABLE,String.class));
 
-        if (RXCACHE_ENABLE) {
+            if (RXCACHE_ENABLE) {
 
-            String type = Configuration.getConfig(Constant.CACHE_RXCACHE_TYPE,String.class);
-            String memType = Configuration.getConfig(Constant.CACHE_RXCACHE_MEMORY_TYPE,String.class);
-            long maxSize = NumberUtils.toInt(Configuration.getConfig(Constant.CACHE_RXCACHE_MEMORY_TYPE,String.class),100);
-            Memory memory = null;
-            switch (memType) {
-                case Constant.FIFO:
-                    memory = new FIFOMemoryImpl(maxSize);
+                String type = Configuration.getConfig(Constant.CACHE_RXCACHE_TYPE,String.class);
+                String memType = Configuration.getConfig(Constant.CACHE_RXCACHE_MEMORY_TYPE,String.class);
+                long maxSize = NumberUtils.toInt(Configuration.getConfig(Constant.CACHE_RXCACHE_MEMORY_TYPE,String.class),100);
+                Memory memory = null;
+                switch (memType) {
+                    case Constant.FIFO:
+                        memory = new FIFOMemoryImpl(maxSize);
+                        break;
+
+                    case Constant.LRU:
+                        memory = new LRUMemoryImpl(maxSize);
+                        break;
+
+                    case Constant.LFU:
+                        memory = new LFUMemoryImpl(maxSize);
+                        break;
+
+                    case Constant.CAFFEINE:
+                        memory = new CaffeineImpl(maxSize);
+                        break;
+
+                    case Constant.GUAVA:
+                        memory = new GuavaCacheImpl(maxSize);
+                        break;
+
+                    default:
+                        break;
+                }
+
+                RxCache.config(new RxCache.Builder().memory(memory));
+                rxCache = RxCache.getRxCache();
+            }
+
+            String redisCacheType = Configuration.getConfig(Constant.CACHE_REDIS_TYPE,String.class);
+            switch (redisCacheType) {
+
+                case Constant.STANDALONE:
+                    redis = new CacheRedisStandaloneService();
                     break;
-
-                case Constant.LRU:
-                    memory = new LRUMemoryImpl(maxSize);
-                    break;
-
-                case Constant.LFU:
-                    memory = new LFUMemoryImpl(maxSize);
-                    break;
-
-                case Constant.CAFFEINE:
-                    memory = new CaffeineImpl(maxSize);
-                    break;
-
-                case Constant.GUAVA:
-                    memory = new GuavaCacheImpl(maxSize);
-                    break;
-
                 default:
                     break;
             }
-
-            RxCache.config(new RxCache.Builder().memory(memory));
-            rxCache = RxCache.getRxCache();
-        }
-
-        String redisCacheType = Configuration.getConfig(Constant.CACHE_REDIS_TYPE,String.class);
-        switch (redisCacheType) {
-
-            case Constant.STANDALONE:
-                redis = new CacheRedisStandaloneService();
-                break;
-            default:
-                break;
+        } catch (ClassCastException e) {
         }
     }
 
