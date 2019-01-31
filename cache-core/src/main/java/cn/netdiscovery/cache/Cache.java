@@ -17,6 +17,7 @@ import com.safframework.rxcache.memory.impl.FIFOMemoryImpl;
 import com.safframework.rxcache.memory.impl.LFUMemoryImpl;
 import com.safframework.rxcache.memory.impl.LRUMemoryImpl;
 import com.safframework.tony.common.utils.Preconditions;
+import lombok.extern.slf4j.Slf4j;
 import redis.clients.jedis.BitOP;
 
 import java.lang.reflect.Type;
@@ -27,6 +28,7 @@ import java.util.Set;
 /**
  * Created by tony on 2019-01-15.
  */
+@Slf4j
 public class Cache {
 
     private static boolean RXCACHE_ENABLE;
@@ -84,6 +86,7 @@ public class Cache {
                     break;
             }
         } catch (ClassCastException e) {
+            log.error(e.getMessage());
         }
     }
 
