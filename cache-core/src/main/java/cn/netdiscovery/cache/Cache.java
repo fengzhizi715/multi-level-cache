@@ -186,14 +186,7 @@ public class Cache {
 
     public static void del(String... keys) {
         if (RXCACHE_ENABLE) {
-
-            if (Preconditions.isNotBlank(keys)) {
-
-                for (String key:keys) {
-
-                    rxCache.remove(key);
-                }
-            }
+            rxCache.remove(keys);
         }
         redis.del(keys);
     }
@@ -229,8 +222,7 @@ public class Cache {
     public static <T> Long rpush(String key, List<T> values, int seconds) {
         return redis.rpush(key, values, seconds);
     }
-
-
+    
     public static List<String> lrange(String key) {
         return redis.lrange(key);
     }
