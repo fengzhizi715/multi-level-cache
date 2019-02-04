@@ -6,6 +6,9 @@ import cn.netdiscovery.cache.common.SerializableUtils;
 import cn.netdiscovery.cache.config.Configuration;
 import cn.netdiscovery.cache.config.Constant;
 import cn.netdiscovery.cache.redis.IRedisService;
+import cn.netdiscovery.cache.redis.cluster.CacheRedisClusterService;
+import cn.netdiscovery.cache.redis.sentinel.CacheRedisSentinelService;
+import cn.netdiscovery.cache.redis.shard.CacheRedisShardService;
 import cn.netdiscovery.cache.redis.standalone.CacheRedisStandaloneService;
 import com.google.gson.reflect.TypeToken;
 import com.safframework.rxcache.RxCache;
@@ -43,9 +46,8 @@ public class Cache {
 
             if (RXCACHE_ENABLE) {
 
-                String type = Configuration.getConfig(Constant.CACHE_RXCACHE_TYPE,String.class);
                 String memType = Configuration.getConfig(Constant.CACHE_RXCACHE_MEMORY_TYPE,String.class);
-                long maxSize = NumberUtils.toInt(Configuration.getConfig(Constant.CACHE_RXCACHE_MEMORY_TYPE,String.class),100);
+                long maxSize = NumberUtils.toInt(Configuration.getConfig(Constant.CACHE_RXCACHE_MEMORY_MAXSIZE,String.class),100);
                 Memory memory = null;
                 switch (memType) {
                     case Constant.FIFO:
@@ -82,6 +84,19 @@ public class Cache {
                 case Constant.STANDALONE:
                     redis = new CacheRedisStandaloneService();
                     break;
+
+                case Constant.SHARD:
+                    redis = new CacheRedisShardService();
+                    break;
+
+                case Constant.CLUSTER:
+                    redis = new CacheRedisClusterService();
+                    break;
+
+                case Constant.SENTINEL:
+                    redis = new CacheRedisSentinelService();
+                    break;
+                    
                 default:
                     break;
             }
@@ -222,7 +237,7 @@ public class Cache {
     public static <T> Long rpush(String key, List<T> values, int seconds) {
         return redis.rpush(key, values, seconds);
     }
-    
+
     public static List<String> lrange(String key) {
         return redis.lrange(key);
     }

@@ -12,7 +12,6 @@ public class Constant {
 
 
     public static final String CACHE_RXCACHE_ENABLE             = "cache.rxcache.enable";
-    public static final String CACHE_RXCACHE_TYPE               = "cache.rxcache.type";
     public static final String CACHE_RXCACHE_MEMORY_TYPE        = "cache.rxcache.memory.type";
     public static final String CACHE_RXCACHE_MEMORY_MAXSIZE     = "cache.rxcache.memory.maxSize";
 
@@ -33,7 +32,7 @@ public class Constant {
 
 
     public static final String STANDALONE = "standalone";
-    public static final String SENTINEL   = "sentinel";
     public static final String SHARD      = "shard";
     public static final String CLUSTER    = "cluster";
+    public static final String SENTINEL   = "sentinel";
 }
