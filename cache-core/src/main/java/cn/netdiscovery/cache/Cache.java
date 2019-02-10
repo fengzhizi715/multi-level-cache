@@ -96,7 +96,7 @@ public class Cache {
                 case Constant.SENTINEL:
                     redis = new CacheRedisSentinelService();
                     break;
-                    
+
                 default:
                     break;
             }
