@@ -36,8 +36,8 @@ public class Cache {
 
     private static boolean RXCACHE_ENABLE;
 
-    private volatile static RxCache rxCache;
-    private volatile static IRedisService redis;
+    private static RxCache rxCache;
+    private static IRedisService redis;
 
     static {
 
