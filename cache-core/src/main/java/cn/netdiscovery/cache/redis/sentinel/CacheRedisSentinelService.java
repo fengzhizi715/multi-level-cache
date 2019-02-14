@@ -958,5 +958,9 @@ public class CacheRedisSentinelService implements IRedisService {
     @Override
     public void close() throws IOException {
 
+        if (jedisSentinelPool!=null) {
+
+            jedisSentinelPool.close();
+        }
     }
 }
