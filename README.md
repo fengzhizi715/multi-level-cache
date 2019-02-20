@@ -6,4 +6,5 @@
 # 功能特点：
 
 * 支持 redis、redis-sentinel、redis-sharding、redis-cluster
-* 支持两级缓存配置，支持布隆过滤器，支持Redis分布式锁
+* 支持两级缓存配置：RxCache 和 Redis
+* 支持布隆过滤器，支持Redis分布式锁
