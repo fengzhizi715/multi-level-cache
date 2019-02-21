@@ -34,17 +34,21 @@ public class CacheRedisShardService implements IRedisService {
         String hostsStr = Configuration.getConfig("cache.redis.nodes",String.class);
         String[] hostPorts = hostsStr.split(",");
         List<JedisShardInfo> shards = new ArrayList<>();
-        for (String hostPort : hostPorts) {
-            String[] strings = hostPort.split(":");
-            String host = strings[0];
-            int port = strings.length > 1 ? NumberUtils.toInt(strings[1].trim(), 6379) : 6379;
-            JedisShardInfo jedisShardInfo = new JedisShardInfo(host, port);
-            String password = Configuration.getConfig("cache.redis.password",String.class);
-            if (Preconditions.isNotBlank(password)) {
-                jedisShardInfo.setPassword(password);
+
+        if (Preconditions.isNotBlank(hostPorts)) {
+            for (String hostPort : hostPorts) {
+                String[] strings = hostPort.split(":");
+                String host = strings[0];
+                int port = strings.length > 1 ? NumberUtils.toInt(strings[1].trim(), 6379) : 6379;
+                JedisShardInfo jedisShardInfo = new JedisShardInfo(host, port);
+                String password = Configuration.getConfig("cache.redis.password",String.class);
+                if (Preconditions.isNotBlank(password)) {
+                    jedisShardInfo.setPassword(password);
+                }
+                shards.add(jedisShardInfo);
             }
-            shards.add(jedisShardInfo);
         }
+
         jedisPool = new ShardedJedisPool(config, shards);
     }
 

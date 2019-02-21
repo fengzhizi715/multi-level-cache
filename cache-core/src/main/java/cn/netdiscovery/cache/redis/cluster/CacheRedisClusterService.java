@@ -34,12 +34,16 @@ public class CacheRedisClusterService implements IRedisService {
         String hostsStr = Configuration.getConfig("cache.redis.nodes",String.class);
         String[] hostPorts = hostsStr.split(",");
         HashSet<HostAndPort> hostSet = new HashSet<>();
-        for (String hostPort : hostPorts) {
-            String[] strings = hostPort.split(":");
-            String host = strings[0];
-            int port = strings.length > 1 ? NumberUtils.toInt(strings[1].trim(), 6379) : 6379;
-            hostSet.add(new HostAndPort(host, port));
+
+        if (Preconditions.isNotBlank(hostPorts)) {
+            for (String hostPort : hostPorts) {
+                String[] strings = hostPort.split(":");
+                String host = strings[0];
+                int port = strings.length > 1 ? NumberUtils.toInt(strings[1].trim(), 6379) : 6379;
+                hostSet.add(new HostAndPort(host, port));
+            }
         }
+
         String password = Configuration.getConfig("cache.redis.password",String.class);
         if (Preconditions.isBlank(password)) {
             jedisCluster = new JedisCluster(hostSet, config);
